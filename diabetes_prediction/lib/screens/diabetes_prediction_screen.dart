@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:diabetes_prediction/services/api_service.dart';
 import 'package:diabetes_prediction/screens/prediction_result_screen.dart';
+import 'package:diabetes_prediction/utils/custom_page_route.dart';
 
 class DiabetesPredictionScreen extends StatefulWidget {
   const DiabetesPredictionScreen({super.key});
@@ -69,11 +70,13 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
         if (!mounted) return;
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) =>
-                PredictionResultScreen(predictionResult: resultText),
+          CustomPageRoute(
+            child: PredictionResultScreen(predictionResult: resultText),
           ),
-        );
+        ).then((_) {
+          // Add .then to clear fields when returning from result screen
+          _clearFields();
+        });
       } catch (e) {
         if (!mounted) return;
         // Show error using a SnackBar or AlertDialog
@@ -83,12 +86,25 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
             backgroundColor: Colors.red,
           ),
         );
+        _clearFields(); // Clear fields on error as well
       } finally {
         setState(() {
           _isLoading = false;
         });
       }
     }
+  }
+
+  void _clearFields() {
+    _pregnanciesController.clear();
+    _glucoseController.clear();
+    _bloodPressureController.clear();
+    _skinThicknessController.clear();
+    _insulinController.clear();
+    _bmiController.clear();
+    _diabetesPedigreeController.clear();
+    _ageController.clear();
+    // No need for setState here, as clear() updates the controllers
   }
 
   @override
@@ -193,7 +209,7 @@ class _DiabetesPredictionScreenState extends State<DiabetesPredictionScreen> {
                       elevation: 5,
                     ),
                   ),
-                  // Removed prediction result display from this screen
+                  // Removed 'Clear All' button
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diabetes_prediction/screens/diabetes_prediction_screen.dart';
+import 'package:diabetes_prediction/utils/custom_page_route.dart';
 
 class AnimatedIntroScreen extends StatefulWidget {
   const AnimatedIntroScreen({super.key});
@@ -91,9 +92,7 @@ class _AnimatedIntroScreenState extends State<AnimatedIntroScreen>
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const DiabetesPredictionScreen(),
-                      ),
+                      CustomPageRoute(child: const DiabetesPredictionScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

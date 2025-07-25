@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:diabetes_prediction/screens/animated_intro_screen.dart';
+import 'package:diabetes_prediction/utils/custom_page_route.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const AnimatedIntroScreen()),
+      CustomPageRoute(child: const AnimatedIntroScreen()),
     );
   }
 
